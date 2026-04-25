@@ -6,9 +6,9 @@ A minimal web browser built with C++ and WebKitGTK.
 
 ## Features
 
-- 🖥️ **Desktop window** using GTK3
-- 🌐 **Embedded browser** using WebKitGTK
-- 🔍 **Address bar** with navigation
+- **Desktop window** using GTK3
+- **Embedded browser** using WebKitGTK
+- **Address bar** with navigation
   - Enter any URL (e.g., `google.com`)
   - Search terms automatically search via Google
   - Auto-adds `https://` if missing
