@@ -1,0 +1,46 @@
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# IDE
+.vscode/
+.idea/
+*.pro
+*.sln
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CEF files (managed as submodule)
+# Untracked content in cef submodule
+cef/
+
+# CEF binary distribution (should be downloaded separately)
+cef_binary/
+cef_binary_*/
+
+# Archives
+*.tar.gz
+*.tar.bz2
+*.zip
+
+# Temp
+*.log
+tmp/
+temp/
+
+# Session files
+OPENCODE_SESSION.txt

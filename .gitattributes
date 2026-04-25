@@ -1,0 +1,15 @@
+* text=auto
+*.cpp text=cpp
+*.h text=cpp
+*.cmake text=cmake
+CMakeLists.txt text=cmake
+
+# Binary files
+*.so binary
+*.dylib binary
+*.dll binary
+
+# Archives
+*.tar.bz2 binary
+*.tar.gz binary
+*.zip binary
