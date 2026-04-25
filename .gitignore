@@ -24,13 +24,8 @@ Makefile
 .DS_Store
 Thumbs.db
 
-# CEF files (managed as submodule)
-# Untracked content in cef submodule
-cef/
-
 # CEF binary distribution (should be downloaded separately)
-cef_binary/
-cef_binary_*/
+# cef_binary/
 
 # Archives
 *.tar.gz
