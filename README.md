@@ -1,8 +1,6 @@
 # hrBrowser
 
-A minimal web browser built with C++ and WebKitGTK.
-
-![hrBrowser Screenshot](https://via.placeholder.com/800x600?text=hrBrowser)
+A minimal web browser built with C++ and WebKitGTK
 
 ## Features
 
