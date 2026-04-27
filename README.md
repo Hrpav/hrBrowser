@@ -69,16 +69,32 @@ make -j4
 
 ```
 hrBrowser/
-├── src/
-│   └── main.cpp           # Browser source code
-├── cef/                    # CEF submodule (headers)
-├── cef_binary/             # CEF binary distribution
-├── build/                 # Build output
-│   └── hrBrowser          # Compiled executable
-├── CMakeLists.txt         # Build configuration
-├── LICENSE.txt            # MIT License
-├── README.md              # This file
-└── .gitmodules           # Git submodules config
+├── AGENTS.md
+├── CMakeLists.txt
+├── CODEX_SESSION.txt
+├── LICENSE.txt
+├── OPENCODE_SESSION.txt
+├── README.md
+├── browser
+│   ├── browser.cpp
+│   └── browser.h
+├── src
+│   └── main.cpp   
+└── ui
+    ├── address_bar
+    │   ├── address_bar.cpp
+    │   └── address_bar.h
+    ├── backward_button
+    │   ├── backward_button.cpp
+    │   └── backward_button.h
+    ├── forward_button
+    │   ├── forward_button.cpp
+    │   └── forward_button.h
+    ├── refresh_button
+    │   ├── refresh_button.cpp
+    │   └── refresh_button.h
+    ├── ui.cpp
+    └── ui.
 ```
 
 ## Requirements
