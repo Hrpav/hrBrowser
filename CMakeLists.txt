@@ -13,13 +13,13 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(WEBKITGTK REQUIRED webkit2gtk-4.1)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
-add_executable(hrBrowser src/main.cpp)
+add_executable(hrBrowser main.cpp)
 target_sources(hrBrowser PRIVATE
-  src/ui/ui.cpp
-  src/ui/address_bar/address_bar.cpp
-  src/ui/backward_button/backward_button.cpp
-  src/ui/forward_button/forward_button.cpp
-  src/ui/refresh_button/refresh_button.cpp
+  ui/ui.cpp
+  ui/address_bar/address_bar.cpp
+  ui/backward_button/backward_button.cpp
+  ui/forward_button/forward_button.cpp
+  ui/refresh_button/refresh_button.cpp
 )
 
 target_include_directories(hrBrowser PRIVATE

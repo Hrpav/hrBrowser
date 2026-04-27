@@ -38,6 +38,7 @@ tmp/
 temp/
 
 # Session files
+CODEX_SESSION.txt
 OPENCODE_SESSION.txt
 
 # Codex
