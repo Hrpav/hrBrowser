@@ -15,7 +15,11 @@ pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
 add_executable(hrBrowser src/main.cpp)
 target_sources(hrBrowser PRIVATE
+  src/ui/ui.cpp
   src/ui/address_bar/address_bar.cpp
+  src/ui/backward_button/backward_button.cpp
+  src/ui/forward_button/forward_button.cpp
+  src/ui/refresh_button/refresh_button.cpp
 )
 
 target_include_directories(hrBrowser PRIVATE

@@ -1,5 +1,6 @@
 #include "address_bar.h"
 
+#include <cstring>
 #include <string>
 
 static std::string NormalizeUri(const char* text) {
@@ -26,11 +27,16 @@ static std::string NormalizeUri(const char* text) {
 }
 
 AddressBar::AddressBar() {
-  entry_ = GTK_ENTRY(gtk_entry_new());
-  g_signal_connect(G_OBJECT(entry_), "activate", G_CALLBACK(OnActivateThunk), this);
+  // Gtk widgets must be created only after gtk_init_check().
 }
 
 AddressBar::~AddressBar() = default;
+
+void AddressBar::Init() {
+  if (entry_) return;
+  entry_ = GTK_ENTRY(gtk_entry_new());
+  g_signal_connect(G_OBJECT(entry_), "activate", G_CALLBACK(OnActivateThunk), this);
+}
 
 void AddressBar::SetWebView(WebKitWebView* webview) { webview_ = webview; }
 
@@ -48,4 +54,3 @@ void AddressBar::OnActivate() {
   const std::string uri = NormalizeUri(text);
   webkit_web_view_load_uri(webview_, uri.c_str());
 }
-

@@ -9,6 +9,9 @@ class AddressBar {
   AddressBar();
   ~AddressBar();
 
+  // Must be called after gtk_init_check().
+  void Init();
+
   GtkWidget* widget() const { return GTK_WIDGET(entry_); }
 
   void SetWebView(WebKitWebView* webview);
@@ -23,4 +26,3 @@ class AddressBar {
 };
 
 #endif  // HRBROWSER_ADDRESS_BAR_H_
-
