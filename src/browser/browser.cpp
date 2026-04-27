@@ -9,7 +9,7 @@
 #include "include/cef_parser.h"
 #include "include/cef_task.h"
 #include "include/wrapper/cef_helpers.h"
-#include "ui.h"
+#include "../ui/ui.h"
 
 static const char* kDefaultUrl = "https://www.google.com";
 

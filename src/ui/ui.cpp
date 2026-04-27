@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #include "include/wrapper/cef_helpers.h"
-#include "browser.h"
+#include "../browser/browser.h"
 
 UI::UI() : browser_window_(nullptr), browser_(nullptr) {}
 
