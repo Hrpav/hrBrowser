@@ -39,3 +39,6 @@ temp/
 
 # Session files
 OPENCODE_SESSION.txt
+
+# Codex
+*.codex

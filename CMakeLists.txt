@@ -14,6 +14,9 @@ pkg_check_modules(WEBKITGTK REQUIRED webkit2gtk-4.1)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
 add_executable(hrBrowser src/main.cpp)
+target_sources(hrBrowser PRIVATE
+  src/ui/address_bar/address_bar.cpp
+)
 
 target_include_directories(hrBrowser PRIVATE
   ${WEBKITGTK_INCLUDE_DIRS}
