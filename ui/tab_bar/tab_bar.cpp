@@ -73,20 +73,39 @@ void TabBar::Init() {
 
   // CSS for close-button hover circle + active tab background.
   {
-    GtkCssProvider* provider = gtk_css_provider_new();
-    const char* css =
-        ".tab-item { padding: 2px 8px; border-radius: 6px; }"
-        ".tab-item:hover { background: rgba(0,0,0,0.06); }"
-        ".tab-item.tab-active { background: rgba(0,0,0,0.10); }"
-        ".tab-close { border-radius: 999px; padding: 2px 6px; }"
-        ".tab-close:hover { background: rgba(0,0,0,0.16); }";
-    gtk_css_provider_load_from_data(provider, css, -1, nullptr);
-    GdkScreen* screen = gdk_screen_get_default();
-    if (screen) {
-      gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(provider),
-                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    const char* candidates[] = {
+        "ui/tab_bar/css/tab.css",         // running from repo root
+        "../ui/tab_bar/css/tab.css",      // running from build/
+        "../../ui/tab_bar/css/tab.css",   // running from build subdir
+    };
+
+    std::string css_path;
+    for (const char* c : candidates) {
+      if (g_file_test(c, G_FILE_TEST_EXISTS)) {
+        css_path = c;
+        break;
+      }
     }
-    g_object_unref(provider);
+
+    if (!css_path.empty()) {
+      GtkCssProvider* provider = gtk_css_provider_new();
+      GError* error = nullptr;
+      gtk_css_provider_load_from_path(provider, css_path.c_str(), &error);
+      if (error) {
+        g_warning("hrBrowser: failed to load tab css from %s: %s", css_path.c_str(), error->message);
+        g_error_free(error);
+      } else {
+        GdkScreen* screen = gdk_screen_get_default();
+        if (screen) {
+          gtk_style_context_add_provider_for_screen(screen, GTK_STYLE_PROVIDER(provider),
+                                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+          g_message("hrBrowser: loaded tab css from %s", css_path.c_str());
+        }
+      }
+      g_object_unref(provider);
+    } else {
+      g_warning("hrBrowser: tab css not found (expected ui/tab_bar/css/tab.css)");
+    }
   }
 
   bar_hbox_ = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6));

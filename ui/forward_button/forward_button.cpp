@@ -8,7 +8,7 @@ ForwardButton::~ForwardButton() = default;
 
 void ForwardButton::Init() {
   if (button_) return;
-  button_ = GTK_BUTTON(gtk_button_new_with_label("->"));
+  button_ = GTK_BUTTON(gtk_button_new_with_label("→"));
   gtk_widget_set_sensitive(GTK_WIDGET(button_), FALSE);
   g_signal_connect(G_OBJECT(button_), "clicked", G_CALLBACK(OnClickedThunk), this);
 }

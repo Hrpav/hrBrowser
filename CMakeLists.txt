@@ -24,6 +24,7 @@ target_sources(hrBrowser PRIVATE
 )
 
 target_include_directories(hrBrowser PRIVATE
+  ${CMAKE_SOURCE_DIR}
   ${WEBKITGTK_INCLUDE_DIRS}
   ${GTK3_INCLUDE_DIRS}
 )

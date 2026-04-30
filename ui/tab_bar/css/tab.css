@@ -1,0 +1,6 @@
+.tab-item { padding: 2px 8px; border-radius: 6px; }
+.tab-item:hover { background: rgba(0,0,0,0.06); }
+.tab-item.tab-active { background: rgba(0,0,0,0.10); }
+.tab-close { border-radius: 999px; padding: 2px 6px; }
+.tab-close:hover { background: rgba(0,0,0,0.16); }
+

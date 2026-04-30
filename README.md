@@ -20,13 +20,7 @@ git clone https://github.com/Hrpavi/hrBrowser.git
 cd hrBrowser
 ```
 
-### 2. Initialize submodules (CEF headers)
-
-```bash
-git submodule update --init --recursive
-```
-
-### 3. Install dependencies
+### 2. Install dependencies
 
 ```bash
 sudo apt-get update
@@ -38,7 +32,7 @@ sudo apt-get install -y \
     libwebkit2gtk-4.1-dev
 ```
 
-### 4. Build
+### 3. Build
 
 ```bash
 mkdir -p build
@@ -47,7 +41,7 @@ cmake ..
 make -j4
 ```
 
-### 5. Run
+### 4. Run
 
 ```bash
 ./hrBrowser
