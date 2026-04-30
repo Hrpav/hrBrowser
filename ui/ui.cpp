@@ -14,6 +14,7 @@ bool UI::Init(int* argc, char*** argv, int width, int height) {
   forward_button_.Init();
   refresh_button_.Init();
   address_bar_.Init();
+  tab_bar_.Init();
 
   window_ = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
   gtk_window_set_title(window_, "hrBrowser");
@@ -22,6 +23,9 @@ bool UI::Init(int* argc, char*** argv, int width, int height) {
 
   root_vbox_ = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
   gtk_container_add(GTK_CONTAINER(window_), GTK_WIDGET(root_vbox_));
+
+  // Top tab strip.
+  gtk_box_pack_start(root_vbox_, tab_bar_.bar_widget(), FALSE, FALSE, 2);
 
   // Top toolbar: back, forward, refresh, address bar (Chrome-like placement).
   toolbar_hbox_ = GTK_BOX(gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 4));
@@ -33,20 +37,15 @@ bool UI::Init(int* argc, char*** argv, int width, int height) {
   gtk_box_pack_start(toolbar_hbox_, address_bar_.widget(), TRUE, TRUE, 0);
   gtk_widget_set_hexpand(address_bar_.widget(), TRUE);
 
-  webview_ = WEBKIT_WEB_VIEW(webkit_web_view_new());
-  gtk_box_pack_start(root_vbox_, GTK_WIDGET(webview_), TRUE, TRUE, 0);
+  // Tab contents.
+  gtk_box_pack_start(root_vbox_, tab_bar_.content_widget(), TRUE, TRUE, 0);
 
-  backward_button_.SetWebView(webview_);
-  forward_button_.SetWebView(webview_);
-  refresh_button_.SetWebView(webview_);
-  address_bar_.SetWebView(webview_);
+  tab_bar_.SetOnActiveWebViewChanged([this](WebKitWebView* w) { SetActiveWebView(w); });
+  tab_bar_.SetOnLastTabClosed([this]() { RequestQuit(); });
 
-  // Keep address bar and nav button enabled states in sync with the webview.
-  g_signal_connect(G_OBJECT(webview_), "notify::uri", G_CALLBACK(OnUriChangedThunk), this);
-  g_signal_connect(G_OBJECT(webview_), "load-changed", G_CALLBACK(OnLoadChangedThunk), this);
-  g_signal_connect(G_OBJECT(webview_), "notify::can-go-back", G_CALLBACK(OnCanGoBackChangedThunk), this);
-  g_signal_connect(G_OBJECT(webview_), "notify::can-go-forward", G_CALLBACK(OnCanGoForwardChangedThunk), this);
-  SyncNavButtons();
+  // Create the initial tab.
+  WebKitWebView* initial = tab_bar_.AddTab(nullptr);
+  tab_bar_.SelectTab(initial);
 
   gtk_widget_show_all(GTK_WIDGET(window_));
   return true;
@@ -108,4 +107,43 @@ void UI::SyncNavButtons() {
   if (!webview_) return;
   backward_button_.SetEnabled(webkit_web_view_can_go_back(webview_));
   forward_button_.SetEnabled(webkit_web_view_can_go_forward(webview_));
+}
+
+void UI::SetActiveWebView(WebKitWebView* webview) {
+  if (webview_ == webview) return;
+  if (webview_ && G_IS_OBJECT(webview_)) {
+    g_signal_handlers_disconnect_by_data(G_OBJECT(webview_), this);
+  }
+
+  webview_ = webview;
+  if (!webview_) {
+    backward_button_.SetWebView(nullptr);
+    forward_button_.SetWebView(nullptr);
+    refresh_button_.SetWebView(nullptr);
+    address_bar_.SetWebView(nullptr);
+    backward_button_.SetEnabled(false);
+    forward_button_.SetEnabled(false);
+    return;
+  }
+
+  backward_button_.SetWebView(webview_);
+  forward_button_.SetWebView(webview_);
+  refresh_button_.SetWebView(webview_);
+  address_bar_.SetWebView(webview_);
+
+  // Keep address bar and nav button enabled states in sync with the active webview.
+  g_signal_connect(G_OBJECT(webview_), "notify::uri", G_CALLBACK(OnUriChangedThunk), this);
+  g_signal_connect(G_OBJECT(webview_), "load-changed", G_CALLBACK(OnLoadChangedThunk), this);
+  g_signal_connect(G_OBJECT(webview_), "notify::can-go-back", G_CALLBACK(OnCanGoBackChangedThunk), this);
+  g_signal_connect(G_OBJECT(webview_), "notify::can-go-forward",
+                   G_CALLBACK(OnCanGoForwardChangedThunk), this);
+
+  OnUriChanged();
+  SyncNavButtons();
+}
+
+void UI::RequestQuit() {
+  g_message("hrBrowser: last tab closed; exiting");
+  if (window_) gtk_widget_destroy(GTK_WIDGET(window_));
+  gtk_main_quit();
 }

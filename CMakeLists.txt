@@ -20,6 +20,7 @@ target_sources(hrBrowser PRIVATE
   ui/backward_button/backward_button.cpp
   ui/forward_button/forward_button.cpp
   ui/refresh_button/refresh_button.cpp
+  ui/tab_bar/tab_bar.cpp
 )
 
 target_include_directories(hrBrowser PRIVATE

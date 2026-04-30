@@ -8,6 +8,7 @@
 #include "backward_button/backward_button.h"
 #include "forward_button/forward_button.h"
 #include "refresh_button/refresh_button.h"
+#include "tab_bar/tab_bar.h"
 
 class UI {
  public:
@@ -34,6 +35,7 @@ class UI {
 
   GtkWindow* window_ = nullptr;
   GtkBox* root_vbox_ = nullptr;
+  TabBar tab_bar_;
   GtkBox* toolbar_hbox_ = nullptr;
   WebKitWebView* webview_ = nullptr;
 
@@ -41,6 +43,9 @@ class UI {
   ForwardButton forward_button_;
   RefreshButton refresh_button_;
   AddressBar address_bar_;
+
+  void SetActiveWebView(WebKitWebView* webview);
+  void RequestQuit();
 };
 
 #endif  // HRBROWSER_UI_H_
